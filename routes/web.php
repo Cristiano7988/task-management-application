@@ -20,3 +20,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::group(['prefix' => 'tasks'], function () use ($router) {
+    $router->post('', [App\Http\Controllers\TaskController::class, 'store']);
+});
