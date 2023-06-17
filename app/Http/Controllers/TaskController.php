@@ -34,4 +34,14 @@ class TaskController extends Controller
             return redirect()->back()->with("danger", $th->getMessage());
         }
     }
+
+    public function show(Request $request) {  
+        try {    
+            $tasks = $request->user()->tasks()->get();
+    
+            return view("tasks", compact('tasks'));
+        } catch (\Throwable $th) {
+            return redirect()->back()->with("danger", $th->getMessage());
+        }
+    }
 }
