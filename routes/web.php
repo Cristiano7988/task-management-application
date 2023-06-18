@@ -25,4 +25,5 @@ Route::group(['prefix' => 'tasks'], function () use ($router) {
     $router->post('', [App\Http\Controllers\TaskController::class, 'store']);
     $router->get('', [App\Http\Controllers\TaskController::class, 'index']);
     $router->get('{id}', [App\Http\Controllers\TaskController::class, 'show']);
+    $router->put('{id}', [App\Http\Controllers\TaskController::class, 'update']);
 });

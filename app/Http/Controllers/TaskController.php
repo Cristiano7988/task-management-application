@@ -26,7 +26,7 @@ class TaskController extends Controller
     public function index(Request $request) {  
         try {    
             $tasks = $request->user()->tasks()->paginate(5);
-            // dd($tasks);
+
             return view("tasks", compact('tasks'));
         } catch (\Throwable $th) {
             return redirect()->back()->with("danger", $th->getMessage());
@@ -51,6 +51,18 @@ class TaskController extends Controller
             $task = Task::find($id);
 
             return view("task", compact('task'));
+        } catch (\Throwable $th) {
+            return redirect()->back()->with("danger", $th->getMessage());
+        }
+    }
+
+    public function update(int $id,Request $request) {  
+        try {
+            $task = Task::find($id);
+            $task->fill($request->all());
+            $task->save();
+
+            return view("task", compact('task'))->with("success",'Task !' . $task->title . '" updated!');
         } catch (\Throwable $th) {
             return redirect()->back()->with("danger", $th->getMessage());
         }
