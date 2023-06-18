@@ -19,5 +19,7 @@
             </div>
         </div>
     @endforeach
+    <hr />
+    {{ $tasks->links() }}
 </div>
 @endsection

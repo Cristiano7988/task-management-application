@@ -37,8 +37,8 @@ class TaskController extends Controller
 
     public function show(Request $request) {  
         try {    
-            $tasks = $request->user()->tasks()->get();
-    
+            $tasks = $request->user()->tasks()->paginate(5);
+            // dd($tasks);
             return view("tasks", compact('tasks'));
         } catch (\Throwable $th) {
             return redirect()->back()->with("danger", $th->getMessage());
