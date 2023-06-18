@@ -23,5 +23,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::group(['prefix' => 'tasks'], function () use ($router) {
     $router->post('', [App\Http\Controllers\TaskController::class, 'store']);
-    $router->get('', [App\Http\Controllers\TaskController::class, 'show']);
+    $router->get('', [App\Http\Controllers\TaskController::class, 'index']);
+    $router->get('{id}', [App\Http\Controllers\TaskController::class, 'show']);
 });

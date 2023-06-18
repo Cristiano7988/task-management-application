@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -22,6 +23,16 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+    public function index(Request $request) {  
+        try {    
+            $tasks = $request->user()->tasks()->paginate(5);
+            // dd($tasks);
+            return view("tasks", compact('tasks'));
+        } catch (\Throwable $th) {
+            return redirect()->back()->with("danger", $th->getMessage());
+        }
+    }
+
     public function store(Request $request) {  
         try {
             DB::beginTransaction();
@@ -35,11 +46,11 @@ class TaskController extends Controller
         }
     }
 
-    public function show(Request $request) {  
-        try {    
-            $tasks = $request->user()->tasks()->paginate(5);
-            // dd($tasks);
-            return view("tasks", compact('tasks'));
+    public function show(int $id) {  
+        try {
+            $task = Task::find($id);
+
+            return view("task", compact('task'));
         } catch (\Throwable $th) {
             return redirect()->back()->with("danger", $th->getMessage());
         }
