@@ -14,6 +14,15 @@
 
 <script>
     const tooggleEditMode = () => document.querySelector('.card').classList.toggle('edit');
+    const deleteTask = (id) => {
+        if (!confirm("Do you wish to delete this task?")) return;
+        fetch("/tasks/" + id, {
+            method: "DELETE",
+            headers: {
+                'X-CSRF-Token': document.querySelector('input[name=_token]').value
+            }
+        })
+    }
 </script>
 
 @section('content')
@@ -21,7 +30,11 @@
     <div class="card">
         <div class="card-header d-flex align-items-center justify-content-between">
             {{ $task->title }}
-            <buton class="btn btn-primary" onclick="tooggleEditMode()">Edit</buton>
+            <div>
+                @csrf
+                <buton class="btn btn-primary" onclick="tooggleEditMode()">Edit</buton>
+                <buton class="btn btn-danger" onclick="deleteTask({{$task->id}})">Delete</buton>
+            </div>
         </div>
         <div class="card-body">
             <div class="d-flex flex-column">

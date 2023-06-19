@@ -49,6 +49,7 @@ class TaskController extends Controller
     public function show(int $id) {  
         try {
             $task = Task::find($id);
+            if (!$task) return redirect()->back()->with("danger", "Task not found");
 
             return view("task", compact('task'));
         } catch (\Throwable $th) {
@@ -61,6 +62,17 @@ class TaskController extends Controller
             $task = Task::find($id);
             $task->fill($request->all());
             $task->save();
+
+            return view("task", compact('task'))->with("success",'Task !' . $task->title . '" updated!');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with("danger", $th->getMessage());
+        }
+    }
+
+    public function destroy(int $id) {  
+        try {
+            $task = Task::find($id);
+            $task->destroy($id);
 
             return view("task", compact('task'))->with("success",'Task !' . $task->title . '" updated!');
         } catch (\Throwable $th) {

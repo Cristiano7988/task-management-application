@@ -26,4 +26,5 @@ Route::group(['prefix' => 'tasks'], function () use ($router) {
     $router->get('', [App\Http\Controllers\TaskController::class, 'index']);
     $router->get('{id}', [App\Http\Controllers\TaskController::class, 'show']);
     $router->put('{id}', [App\Http\Controllers\TaskController::class, 'update']);
+    $router->delete('{id}', [App\Http\Controllers\TaskController::class, 'destroy']);
 });
